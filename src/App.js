@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { UserProvider } from "./contexts/UserContext";
 import { Home } from "./pages/home";
+import UserPage from "./pages/user-pages";
 
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/sign-in" element={<>sign-in</>} />
+          <Route path="/sign-in" element={<UserPage />} />
         </Routes>
       </Router>
     </UserProvider>

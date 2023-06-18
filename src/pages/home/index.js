@@ -1,5 +1,21 @@
 import styled from "styled-components";
+import HotelsComponent from "../../components/home/hotels-components";
+import { useEffect } from "react";
+import axios from "axios";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 export function Home() {
+  const [hotelsArray, setHotelsArray] = React.useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const promise = axios.get(`http://localhost:4000/tst`);
+    promise.then((res) => {
+      setHotelsArray(res.data);
+    });
+    promise.catch((err) => console.log(err));
+  }, []);
+
   return (
     <Container>
       <Header>
@@ -9,7 +25,7 @@ export function Home() {
           <span>hotels</span>
           <span>rooms</span>
           <span>about</span>
-          <span>sign-in</span>
+          <span onClick={() => navigate("/sign-in")}>sign-in</span>
         </div>
       </Header>
 
@@ -33,32 +49,7 @@ export function Home() {
         </SearchForm>
       </Search>
 
-      <Hotels>
-        <h1>Alguns de nossos hoteis parceiros</h1>
-
-        <section>
-          <img
-            src="https://cdn.britannica.com/96/115096-050-5AFDAF5D/Bellagio-Hotel-Casino-Las-Vegas.jpg"
-            alt=""
-          ></img>
-          <div>
-            <h2>Bellagio</h2>
-            <p>SUKN - DXKN - BCKN</p>
-            <button>Consulte a Disponibilidade</button>
-          </div>
-        </section>
-        <section>
-          <div>
-            <h2>Bellagio</h2>
-            <p>SUKN - DXKN - BCKN</p>
-            <button>Consulte a Disponibilidade</button>
-          </div>
-          <img
-            src="https://cdn.britannica.com/96/115096-050-5AFDAF5D/Bellagio-Hotel-Casino-Las-Vegas.jpg"
-            alt=""
-          ></img>
-        </section>
-      </Hotels>
+      <HotelsComponent hotelsAvail={hotelsArray} />
     </Container>
   );
 }
@@ -135,64 +126,6 @@ const SearchForm = styled.form`
       font-weight: bold;
       font-size: medium;
       cursor: pointer;
-    }
-  }
-`;
-
-const Hotels = styled.div`
-  h1 {
-    color: white;
-    font-size: 35px;
-    margin-bottom: 70px;
-  }
-  text-align: center;
-  font-family: "Geologica", sans-serif;
-  margin-top: 50px;
-  display: flex;
-  gap: 10px;
-  flex-direction: column;
-  section {
-    margin: auto;
-    width: 700px;
-    border-radius: 8px;
-    background-color: white;
-    display: flex;
-    justify-content: space-between;
-    text-align: center;
-    overflow: hidden;
-  }
-  img,
-  div {
-    width: 300px;
-    transition: transform 0.5s ease;
-  }
-  img:hover {
-    transform: scale(1.2);
-  }
-
-  div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    h2 {
-      font-size: 25px;
-    }
-    button {
-      font-family: "Geologica", sans-serif;
-      border: none;
-      height: 40px;
-      width: 180px;
-      font-size: 15px;
-      text-decoration: underline;
-      :hover {
-        background-color: rgba(115, 10, 253, 1);
-        cursor: pointer;
-        border-radius: 10px;
-        color: white;
-        transition: 1s;
-      }
     }
   }
 `;
