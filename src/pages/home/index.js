@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import HotelsComponent from "../../components/home/hotels-components";
 import { useEffect } from "react";
 import axios from "axios";
 import React from "react";
@@ -11,11 +10,13 @@ export function Home() {
   useEffect(() => {
     const promise = axios.get(`http://localhost:4000/tst`);
     promise.then((res) => {
+      console.log(res);
       setHotelsArray(res.data);
     });
     promise.catch((err) => console.log(err));
   }, []);
 
+  if (hotelsArray[0] === undefined) return <>loading</>;
   return (
     <Container>
       <Header>
@@ -49,7 +50,34 @@ export function Home() {
         </SearchForm>
       </Search>
 
-      <HotelsComponent hotelsAvail={hotelsArray} />
+      <Hotels>
+        <h1>Alguns de nossos hoteis parceiros</h1>
+
+        <Hotel>
+          <img src={hotelsArray[0].image} alt=""></img>
+          <Infos>
+            <h2>{hotelsArray[0].name}</h2>
+            <p>
+              {hotelsArray[0].Rooms.map((a) => (
+                <> - {a.name} </>
+              ))}
+            </p>
+            <button>Consulte a Disponibilidade</button>
+          </Infos>
+        </Hotel>
+        <Hotel>
+          <Infos>
+            <h2>{hotelsArray[1].name}</h2>
+            <p>
+              {hotelsArray[1].Rooms.map((a) => (
+                <>- {a.name}</>
+              ))}
+            </p>
+            <button>Consulte a Disponibilidade</button>
+          </Infos>
+          <img src={hotelsArray[1].image} alt=""></img>
+        </Hotel>
+      </Hotels>
     </Container>
   );
 }
@@ -100,7 +128,6 @@ const Search = styled.div`
     margin-bottom: 25px;
   }
 `;
-
 const SearchForm = styled.form`
   margin: auto;
 
@@ -126,6 +153,67 @@ const SearchForm = styled.form`
       font-weight: bold;
       font-size: medium;
       cursor: pointer;
+    }
+  }
+`;
+
+const Hotels = styled.div`
+  h1 {
+    color: white;
+    font-size: 35px;
+    margin-bottom: 70px;
+  }
+
+  text-align: center;
+  font-family: "Geologica", sans-serif;
+  margin-top: 50px;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  img,
+  div {
+    width: 300px;
+    transition: transform 0.5s ease;
+  }
+  img:hover {
+    transform: scale(1.2);
+  }
+`;
+
+const Hotel = styled.section`
+  margin: auto;
+  height: 200px;
+  width: 700px;
+  border-radius: 8px;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  overflow: hidden;
+`;
+
+const Infos = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  h2 {
+    font-size: 25px;
+  }
+  button {
+    font-family: "Geologica", sans-serif;
+    border: none;
+    height: 40px;
+    width: 180px;
+    font-size: 15px;
+    text-decoration: underline;
+    :hover {
+      background-color: rgba(115, 10, 253, 1);
+      cursor: pointer;
+      border-radius: 10px;
+      color: white;
+      transition: 1s;
     }
   }
 `;

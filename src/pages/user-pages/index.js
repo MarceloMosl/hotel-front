@@ -49,7 +49,6 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     text-align: center;
-    background-color: lightslategrey;
     border-radius: 6px;
     gap: 10px;
     h1 {
@@ -68,10 +67,12 @@ const Container = styled.div`
       height: 50px;
       font-size: 18px;
       font-family: "Geologica";
+      color: white;
+      background-color: rgba(115, 10, 253, 1);
       :hover {
         cursor: pointer;
-        background-color: rgba(115, 10, 253, 1);
-        color: white;
+        background-color: white;
+        color: rgba(115, 10, 253, 1);
         border-radius: 6px;
         transition: 0.5s;
       }
