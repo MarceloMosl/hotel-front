@@ -8,7 +8,7 @@ export function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const promise = axios.get(`http://localhost:4000/tst`);
+    const promise = axios.get(`${process.env.REACT_APP_DATABASE}/tst`);
     promise.then((res) => {
       console.log(res);
       setHotelsArray(res.data);
